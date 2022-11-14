@@ -12,7 +12,7 @@ import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
  * @title Smart contract for token exchange 
  * @notice This smart contract uses pancakeswap to exchange tokens
  */
-contract SwaprTokens {
+contract SwapTokens {
     // Show the amount and sender
     event Successfully(uint amount, address user);
 
