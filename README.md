@@ -4,7 +4,8 @@ __Smart contract__ for swapping _tokens_, and testing with help ___[Tenderly](ht
 > Mainnet fork is used
 
 ### Functions of the smart contract:
- `getPriceOnToken()` - __returns__ the _amount_ of the token that will be received;
+ `swapTokenAOnB()` - the _function_ of swapping a __token A => B__; 
+ `swapTokenBOnA()` - the _function_ of swapping a __token B => A__;
 
  > New functions are coming soon..
 
@@ -17,8 +18,8 @@ __Smart contract__ for swapping _tokens_, and testing with help ___[Tenderly](ht
 
 In this project using __"Yarn"__.
 
-`yarn build` - for compile contracts;
-`yarn test` - for testing contracts;
-`yarn coverage` - for see coverage;
-`yarn size` - for see the size of all contracts;
-`yarn prettier` - for code formatting;
++ `yarn build` - for compile contracts;
++ `yarn test` - for testing contracts;
++ `yarn coverage` - for see coverage;
++ `yarn size` - for see the size of all contracts;
++ `yarn prettier` - for code formatting;
