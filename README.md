@@ -4,8 +4,8 @@ __Smart contract__ for swapping _tokens_, and testing with help ___[Tenderly](ht
 > Mainnet fork is used
 
 ### Functions of the smart contract:
-    `swapTokenAOnB()` - the _function_ of swapping a __token A => B__; 
-    `swapTokenBOnA()` - the _function_ of swapping a __token B => A__;
++ `swapTokenAOnB()` - the _function_ of swapping a __token A => B__; 
++ `swapTokenBOnA()` - the _function_ of swapping a __token B => A__;
 
  > New functions are coming soon..
 
