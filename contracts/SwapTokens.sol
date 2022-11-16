@@ -14,7 +14,7 @@ import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
  */
 contract SwapTokens {
     // Show the amount and sender
-    event Successfully(uint amount, address user);
+    event Swapped(uint amount, address user);
 
     /**
      * {uinswapFactory} - address of the 'UniswapV2Factory';
@@ -41,18 +41,21 @@ contract SwapTokens {
     /**
      * Swap WETH to USDC
      *  {path} - array with addresses of tokens;
-     *  {_amauntOutMin} - amount of the token;
+     *  {amauntOutMin} - amount of the token;
+     *  {balance} - balance of the user;
      *  {amounts} - array with data from the function;
      * @return {amounts[1]}
      */
-    function swapTokenAOnB(uint256 _amountIn) public returns(uint256) {
-        address[] memory path;
-        path = new address[](2);
+    function swapTokenAToB(uint256 _amountIn) public returns(uint256) {
+        address[] memory path = new address[](2);
         path[0] = WETH;
         path[1] = USDC;
+        // Need to approve the token
         weth.transferFrom(msg.sender, address(this), _amountIn);
-        weth.approve(address(router), _amountIn);
-        uint256[] memory amauntOutMin = router.getAmountsOut(_amountIn, path); 
+        uint256[] memory amauntOutMin = router.getAmountsOut(_amountIn, path);
+        weth.approve(address(router), amauntOutMin[1]);
+        uint256 balance = usdc.balanceOf(msg.sender);
+        // User gives WETH(18 decimal) and get USDC(6 decimal)   
         uint256[] memory amounts = router.swapExactTokensForTokens(
             _amountIn,
             amauntOutMin[1], 
@@ -60,7 +63,9 @@ contract SwapTokens {
             msg.sender,
             block.timestamp
         );
-        emit Successfully(amounts[1], msg.sender);
+        // The balance must be changed minimum on {amauntOutMin[1]}
+        require(usdc.balanceOf(msg.sender) >= balance + amauntOutMin[1], 'Balance not changed');
+        emit Swapped(amounts[1], msg.sender);
         // amounts[1] = USDC amount
         return amounts[1];
     }
@@ -68,18 +73,21 @@ contract SwapTokens {
     /**
      * Swap USDC to WETH
      *  {path} - array with addresses of tokens;
-     *  {_amauntOutMin} - amount of the token;
+     *  {amauntOutMin} - amount of the token;
+     *  {balance} - balance of the user;
      *  {amounts} - array with data from the function;
      * @return {amounts[1]}
      */
-    function swapTokenBOnA(uint256 _amountIn) public returns(uint256) {
-        address[] memory path;
-        path = new address[](2);
+    function swapTokenBToA(uint256 _amountIn) public returns(uint256) {
+        address[] memory path = new address[](2);
         path[0] = USDC;
         path[1] = WETH;
+        // Need to approve the token
         usdc.transferFrom(msg.sender, address(this), _amountIn);
-        usdc.approve(address(router), _amountIn);
         uint256[] memory amauntOutMin = router.getAmountsOut(_amountIn, path);
+        usdc.approve(address(router), amauntOutMin[1]);
+        uint256 balance = weth.balanceOf(msg.sender);
+        // User gives WETH(18 decimal) and get USDC(6 decimal)
         uint256[] memory amounts = router.swapExactTokensForTokens(
             _amountIn,
             amauntOutMin[1],
@@ -87,7 +95,9 @@ contract SwapTokens {
             msg.sender,
             block.timestamp
         );
-        emit Successfully(amounts[1], msg.sender);
+        // The balance must be changed minimum on {amauntOutMin[1]}  
+        require(weth.balanceOf(msg.sender) >= balance + amauntOutMin[1], 'Balance not changed');
+        emit Swapped(amounts[1], msg.sender);
         // amounts[1] = WETH amount
         return amounts[1];
     }
