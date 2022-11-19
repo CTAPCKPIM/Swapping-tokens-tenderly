@@ -1,14 +1,14 @@
-import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+/*import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("SwapTokens:", function () {
+var SwapTokens = artifacts.require(".contracts/SwapTokens.sol");
+
+contract('SwapTokens', function (accounts) {
   let addressOne: any;
   let addressTwo: any;
-  let swapTokens: any;
-
-  before(async () => {
+  beforeEach(async () => {
     //Getting an address for the tests;
     [addressOne, addressTwo] = await ethers.getSigners();
 
@@ -22,5 +22,4 @@ describe("SwapTokens:", function () {
   it("Should be: deployed", async () => {
     await expect(swapTokens.address).to.be.properAddress;
   });
-});
-
+});*/
