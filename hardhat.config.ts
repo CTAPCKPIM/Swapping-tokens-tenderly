@@ -5,15 +5,17 @@ require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require("dotenv").config();
 require('hardhat-contract-sizer');
-tdly.setup();
+tdly.setup(); 
 
-//Importing keys from '.env'
+// Importing keys from '.env'
 const KEY = process.env.SECRET_KEY;
 const INFURA = process.env.PROVIDER_INFURA;
 const ETHERSCAN = process.env.ETHERSCAN_KEY;
-//Tenderly keys
-const name = process.env.USERNAME;
-const project_name = process.env.PROJECT_NAME;
+// Tenderly keys from '.env'
+const NAME = process.env.USERNAME;
+const PROJECT = process.env.PROJECT_NAME;
+const FORK = process.env.TENDERLY_FORK_URL;
+const ID = process.env.FORK_ID;
 
 module.exports = { 
   solidity: "0.8.17",
@@ -23,6 +25,10 @@ module.exports = {
       url: INFURA,
       accounts: [KEY],
     },
+    tenderly: {
+      url: FORK,
+      chainId: 1,
+    },
   },
   etherscan: {
     apiKey: {
@@ -30,8 +36,9 @@ module.exports = {
     },
   },
   tenderly: {
-      project: project_name,
-      username: name,
+      project: PROJECT,
+      username: NAME,
+      forkNetwork: ID,
     },
-}
-//export default config;
+};
+

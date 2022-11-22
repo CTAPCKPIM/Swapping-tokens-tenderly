@@ -51,7 +51,7 @@ contract SwapTokens {
         path[0] = WETH;
         path[1] = USDC;
         // Need to approve the token
-        weth.transferFrom(msg.sender, address(this), _amountIn);
+        weth.transferFrom(msg.sender, address(this), _amountIn); //HERE!!
         uint256[] memory amauntOutMin = router.getAmountsOut(_amountIn, path);
         weth.approve(address(router), amauntOutMin[1]);
         uint256 balance = usdc.balanceOf(msg.sender);
@@ -66,7 +66,7 @@ contract SwapTokens {
         // The balance must be changed minimum on {amauntOutMin[1]}
         require(usdc.balanceOf(msg.sender) >= balance + amauntOutMin[1], 'Balance not changed');
         emit Swapped(amounts[1], msg.sender);
-        // amounts[1] = USDC amount
+        // Amounts[1] = USDC amount
         return amounts[1];
     }
 
